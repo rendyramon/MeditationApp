@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <color name="appPrimaryBackgroundColor">#009688</color>
+    <color name="appSecondaryBackgroundColor">#004D40</color>
+    <color name="appColorBackgroundAccent">#FF9922</color>
+    <color name="appBackgroundColor">#FAFAFA</color>
+    <color name="appPrimaryTextColor">#FAFAFA</color>
+    <color name="appBody">#FAFAFA</color>
+    <color name="appCardBody">#EBEBEB</color>
+    <color name="appSecondaryTextColor">#656565</color>
+    <color name="appDropBoxSeparator">#C1C1C1</color>
+    <color name="appSelectionTickColor">#455EDE</color>
+    <color name="appImageBackground">#C1C1C1</color>
+</resources>
