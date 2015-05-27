@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditTextPreference
+        android:defaultValue="20"
+        android:inputType="number"
+        android:key="pref_target"
+        android:summary="Target length per session"
+        android:title="Session target length" />
+
+    <EditTextPreference
+        android:defaultValue="5"
+        android:inputType="number"
+        android:key="pref_interval"
+        android:summary="Mindfulness reminder intervals"
+        android:title="Reminders" />
+
+    <!-- TODO: actually save user preferences into the SharedPreferences file -->
+
+</PreferenceScreen>
