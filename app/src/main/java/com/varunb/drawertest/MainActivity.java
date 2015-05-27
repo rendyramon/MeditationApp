@@ -1,10 +1,9 @@
 package com.varunb.drawertest;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -42,14 +41,14 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
+//        PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
         // TODO: fix the above
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         if (position == 0) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, TimerFragment.newInstance(position + 1, this))
@@ -108,7 +107,9 @@ public class MainActivity extends ActionBarActivity
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, new SettingsFragment())
                     .commit();
+            // TODO: add this, and other things, to the backstack
             return true;
+
         }
 
         return super.onOptionsItemSelected(item);
