@@ -3,7 +3,9 @@ package com.varunb.drawertest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -26,6 +28,7 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,16 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
+
+        /**
+         pref = PreferenceManager.getDefaultSharedPreferences(this);
+         boolean throwaway = pref.contains("pref_target");
+         if(throwaway) {
+         Toast toast = Toast.makeText(this, "throwaway true", Toast.LENGTH_LONG);
+         toast.show();
+         }
+         */
+
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -49,9 +62,33 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
+
+        int default_length;
+        int interval;
+
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean check_default = pref.contains("pref_target");
+        boolean check_interval = pref.contains("pref_interval");
+
+        if (check_default) {
+            default_length = Integer.parseInt(pref.getString("pref_target", "11"));
+            //Toast toast = Toast.makeText(this, "throwaway true and tester = " + tester, Toast.LENGTH_LONG);
+            //toast.show();
+        } else {
+            default_length = 44;
+        }
+
+        if (check_interval) {
+            interval = Integer.parseInt(pref.getString("pref_interval", "1"));
+            //Toast toast = Toast.makeText(this, "throwaway true and tester = " + tester, Toast.LENGTH_LONG);
+            //toast.show();
+        } else {
+            interval = 2;
+        }
+
         if (position == 0) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, TimerFragment.newInstance(position + 1, this))
+                    .replace(R.id.container, TimerFragment.newInstance(default_length, interval, this))
                     .commit();
         } else {
             fragmentManager.beginTransaction()

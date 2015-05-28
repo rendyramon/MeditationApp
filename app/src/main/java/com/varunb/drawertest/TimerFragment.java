@@ -22,19 +22,25 @@ public class TimerFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final int SEC_IN_MIN = 60;
-    private static final int SECONDS_INTERVAL_TO_VIBRATE = 10;
+    //private static final int SECONDS_INTERVAL_TO_VIBRATE = 10;
     private static Vibrator vibrator;
     private static Context mContext;
+    private static int default_length;
+    private static int interval_length;
+    private static boolean exceededTarget;
+    // TODO: use the above boolean to record when we flip from countdown to count up
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static TimerFragment newInstance(int sectionNumber, Context context) {
+    public static TimerFragment newInstance(int length, int intervals, Context context) {
         mContext = context;
+        default_length = length;
+        interval_length = intervals;
         TimerFragment fragment = new TimerFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        args.putInt(ARG_SECTION_NUMBER, 0);
         fragment.setArguments(args);
         vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
         return fragment;
@@ -54,12 +60,14 @@ public class TimerFragment extends Fragment {
         final Button btnEnd = (Button) rootView.findViewById(R.id.btnEnd);
         final Button btnCancel = (Button) rootView.findViewById(R.id.btnCancel);
 
+
         btnBegin.setClickable(true);
         btnEnd.setVisibility(View.INVISIBLE);
         btnCancel.setVisibility(View.INVISIBLE);
 
         number_picker.setMinValue(1);
         number_picker.setMaxValue(60);
+        number_picker.setValue(default_length);
 
         btnBegin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,19 +80,23 @@ public class TimerFragment extends Fragment {
                 new CountDownTimer(number_picker.getValue() * SEC_IN_MIN * 1000, 1000) {
 
                     public void onTick(long millisUntilFinished) {
-                        picker_output.setText("seconds remaining: " + millisUntilFinished / 1000);
+                        long sec_elapsed = (number_picker.getValue() * SEC_IN_MIN) - (millisUntilFinished / 1000);
 
-                        if (millisUntilFinished / 1000 % SECONDS_INTERVAL_TO_VIBRATE == 0) {
-                            long[] pattern = {0, 500, 50, 500};
-                            vibrator.vibrate(pattern, -1);
+                        picker_output.setText("seconds remaining: " + millisUntilFinished / 1000 + "and seconds remaining: " + sec_elapsed);
+
+                        if (sec_elapsed % (interval_length * SEC_IN_MIN) == 0) {
+                            vibrator.vibrate(500);
                         }
                     }
 
                     public void onFinish() {
                         picker_output.setText("done!");
-                        vibrator.vibrate(1000);
+                        long[] pattern = {0, 500, 100, 500};
+                        vibrator.vibrate(pattern, -1);
                         btnBegin.setClickable(true);
                         btnEnd.setClickable(false);
+
+                        // TODO: start the counting up
                     }
                 }.start();
 
