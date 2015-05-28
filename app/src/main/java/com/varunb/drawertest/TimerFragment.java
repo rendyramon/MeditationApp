@@ -14,6 +14,9 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 
 public class TimerFragment extends Fragment {
     /**
@@ -28,6 +31,21 @@ public class TimerFragment extends Fragment {
     private static int default_length;
     private static int interval_length;
     private static boolean exceededTarget;
+    private final String restingTitle = "Start a session timer";
+    private final String activeTitle = "Session in progress";
+
+    private MyCountDownTimer myCountDownTimer;
+    private long sec_elapsed;
+    private NumberPicker number_picker;
+    //private TextView picker_output;
+    private Button btnBegin;
+    private Button btnEnd;
+    private Button btnCancel;
+    private TextView interval_text;
+    private TextView counter_text;
+    private TextView timer_title;
+
+
     // TODO: use the above boolean to record when we flip from countdown to count up
 
     /**
@@ -54,59 +72,60 @@ public class TimerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_timer, container, false);
 
-        final NumberPicker number_picker = (NumberPicker) rootView.findViewById(R.id.pickerTime);
-        final TextView picker_output = (TextView) rootView.findViewById(R.id.picker_output);
-        final Button btnBegin = (Button) rootView.findViewById(R.id.btnBegin);
-        final Button btnEnd = (Button) rootView.findViewById(R.id.btnEnd);
-        final Button btnCancel = (Button) rootView.findViewById(R.id.btnCancel);
+        timer_title = (TextView) rootView.findViewById(R.id.timer_title);
+        number_picker = (NumberPicker) rootView.findViewById(R.id.pickerTime);
+        counter_text = (TextView) rootView.findViewById(R.id.counter_text);
+        interval_text = (TextView) rootView.findViewById(R.id.interval_text);
 
+        btnBegin = (Button) rootView.findViewById(R.id.btnBegin);
+        btnEnd = (Button) rootView.findViewById(R.id.btnEnd);
+        btnCancel = (Button) rootView.findViewById(R.id.btnCancel);
 
         btnBegin.setClickable(true);
-        btnEnd.setVisibility(View.INVISIBLE);
-        btnCancel.setVisibility(View.INVISIBLE);
+        btnEnd.setVisibility(View.GONE);
+        btnCancel.setVisibility(View.GONE);
 
         number_picker.setMinValue(1);
         number_picker.setMaxValue(60);
         number_picker.setValue(default_length);
+
+        timer_title.setText(restingTitle);
+        interval_text.setText("Your phone will buzz every " + interval_length + " minutes.");
 
         btnBegin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // picker_output.setText(String.valueOf(number_picker.getValue()));
                 btnBegin.setClickable(false);
+                btnBegin.setVisibility(View.GONE);
                 btnEnd.setVisibility(View.VISIBLE);
                 btnCancel.setVisibility(View.VISIBLE);
+                number_picker.setVisibility(View.GONE);
+                counter_text.setVisibility(View.VISIBLE);
+                counter_text.setText(Integer.toString(number_picker.getValue()));
+                timer_title.setText(activeTitle);
 
-                new CountDownTimer(number_picker.getValue() * SEC_IN_MIN * 1000, 1000) {
+                myCountDownTimer = new MyCountDownTimer(number_picker.getValue() * SEC_IN_MIN * 1000, 1000);
+                myCountDownTimer.start();
 
-                    public void onTick(long millisUntilFinished) {
-                        long sec_elapsed = (number_picker.getValue() * SEC_IN_MIN) - (millisUntilFinished / 1000);
-
-                        picker_output.setText("seconds remaining: " + millisUntilFinished / 1000 + "and seconds remaining: " + sec_elapsed);
-
-                        if (sec_elapsed % (interval_length * SEC_IN_MIN) == 0) {
-                            vibrator.vibrate(500);
-                        }
-                    }
-
-                    public void onFinish() {
-                        picker_output.setText("done!");
-                        long[] pattern = {0, 500, 100, 500};
-                        vibrator.vibrate(pattern, -1);
-                        btnBegin.setClickable(true);
-                        btnEnd.setClickable(false);
-
-                        // TODO: start the counting up
-                    }
-                }.start();
-
+                Toast toast = Toast.makeText(mContext, "Begin session!", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             // TODO: complete listener
             public void onClick(View v) {
-                Toast toast = Toast.makeText(mContext, "Toast from cancel", Toast.LENGTH_SHORT);
+                myCountDownTimer.cancel();
+                number_picker.setVisibility(View.VISIBLE);
+                counter_text.setVisibility(View.GONE);
+                btnBegin.setVisibility(View.VISIBLE);
+                btnBegin.setClickable(true);
+                btnEnd.setVisibility(View.GONE);
+                btnCancel.setVisibility(View.GONE);
+                timer_title.setText(restingTitle);
+
+                Toast toast = Toast.makeText(mContext, "Session timer canceled", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -114,8 +133,20 @@ public class TimerFragment extends Fragment {
         btnEnd.setOnClickListener(new View.OnClickListener() {
             // TODO: complete listener
             public void onClick(View v) {
-                Toast toast = Toast.makeText(mContext, "Toast from end", Toast.LENGTH_SHORT);
+                myCountDownTimer.cancel();
+                recordTime();
+
+                number_picker.setVisibility(View.VISIBLE);
+                counter_text.setVisibility(View.GONE);
+                btnBegin.setVisibility(View.VISIBLE);
+                btnBegin.setClickable(true);
+                btnEnd.setVisibility(View.GONE);
+                btnCancel.setVisibility(View.GONE);
+                timer_title.setText(restingTitle);
+
+                Toast toast = Toast.makeText(mContext, "Session ended early", Toast.LENGTH_SHORT);
                 toast.show();
+
             }
         });
 
@@ -129,5 +160,59 @@ public class TimerFragment extends Fragment {
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
+    private void recordTime() {
+        DatabaseHelper db = new DatabaseHelper(mContext);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("E, LLL d, yyyy");
+        String sessionDate = sdf.format(c.getTime());
+
+        String elapsed_time = (sec_elapsed / 60) + " minutes";
+
+        Session session = new Session(sessionDate, elapsed_time);
+        db.addSession(session);
+    }
+
+    public class MyCountDownTimer extends CountDownTimer {
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        public void onTick(long millisUntilFinished) {
+            sec_elapsed = (number_picker.getValue() * SEC_IN_MIN) - (millisUntilFinished / 1000);
+
+            long totalSecsUntilFinished = millisUntilFinished / 1000;
+            long minUntilFinished = totalSecsUntilFinished / SEC_IN_MIN;
+            long remainingSecs = totalSecsUntilFinished % SEC_IN_MIN;
+            String counterContents = minUntilFinished + " : " + remainingSecs;
+
+            counter_text.setText(counterContents);
+
+            if (sec_elapsed % (interval_length * SEC_IN_MIN) == 0) {
+                vibrator.vibrate(500);
+            }
+        }
+
+        public void onFinish() {
+            long[] pattern = {0, 500, 100, 500};
+            vibrator.vibrate(pattern, -1);
+
+            recordTime();
+
+            Toast toast = Toast.makeText(mContext, "Session finished!", Toast.LENGTH_LONG);
+            toast.show();
+
+            number_picker.setVisibility(View.VISIBLE);
+            btnBegin.setClickable(true);
+            btnEnd.setClickable(false);
+            btnBegin.setVisibility(View.VISIBLE);
+            btnEnd.setVisibility(View.VISIBLE);
+            btnCancel.setVisibility(View.VISIBLE);
+            timer_title.setText(restingTitle);
+
+            // TODO: start the counting up and change the buttons displayed
+        }
+    }
 
 }
+

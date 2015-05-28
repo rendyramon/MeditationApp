@@ -10,8 +10,8 @@ public class Session {
 
     public Session() {}
 
-    public Session(int _id, String date, String duration) {
-        this._id = _id;
+    public Session(String date, String duration) {
+        super();
         this.date = date;
         this.duration = duration;
     }

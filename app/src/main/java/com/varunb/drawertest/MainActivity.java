@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity
@@ -75,7 +76,7 @@ public class MainActivity extends ActionBarActivity
             //Toast toast = Toast.makeText(this, "throwaway true and tester = " + tester, Toast.LENGTH_LONG);
             //toast.show();
         } else {
-            default_length = 44;
+            default_length = 20;
         }
 
         if (check_interval) {
@@ -83,7 +84,7 @@ public class MainActivity extends ActionBarActivity
             //Toast toast = Toast.makeText(this, "throwaway true and tester = " + tester, Toast.LENGTH_LONG);
             //toast.show();
         } else {
-            interval = 2;
+            interval = 5;
         }
 
         // position = 0 is first item in menu
@@ -95,12 +96,16 @@ public class MainActivity extends ActionBarActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, SessionsListFragment.newInstance(this))
                     .commit();
-
-            //TODO: replace fragment
+        } else if (position == 2) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, ManualFragment.newInstance(this))
+                    .commit();
         } else {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                    .replace(R.id.container, TimerFragment.newInstance(default_length, interval, this))
                     .commit();
+            Toast toast = Toast.makeText(this, "A drawer error just occurred, sorry!", Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 

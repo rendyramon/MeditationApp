@@ -44,9 +44,9 @@ public class SessionsListFragment extends Fragment {
         // THIS IS JUST TO CHECK IF IT WORKS
         // TODO: remove when you make manual add functionality
         /*
-        Session test1 = new Session(0,"June 25", "15");
-        Session test2 = new Session(1,"June 26", "20");
-        Session test3 = new Session(2,"June 27", "25");
+        Session test1 = new Session("June 25", "15");
+        Session test2 = new Session("June 26", "20");
+        Session test3 = new Session("June 27", "25");
         db.addSession(test1);
         db.addSession(test2);
         db.addSession(test3);
