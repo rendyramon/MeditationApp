@@ -86,10 +86,17 @@ public class MainActivity extends ActionBarActivity
             interval = 2;
         }
 
+        // position = 0 is first item in menu
         if (position == 0) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, TimerFragment.newInstance(default_length, interval, this))
                     .commit();
+        } else if (position == 1) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, SessionsListFragment.newInstance(this))
+                    .commit();
+
+            //TODO: replace fragment
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
