@@ -57,12 +57,6 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/picker_output"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0 minutes" />
-
-    <TextView
         android:id="@+id/interval_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

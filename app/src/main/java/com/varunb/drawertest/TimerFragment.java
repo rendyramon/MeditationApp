@@ -2,10 +2,16 @@ package com.varunb.drawertest;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +39,9 @@ public class TimerFragment extends Fragment {
     private static boolean exceededTarget;
     private final String restingTitle = "Start a session timer";
     private final String activeTitle = "Session in progress";
+    private int current_notification = 0;
+
+    private NotificationManager mNotificationManager;
 
     private MyCountDownTimer myCountDownTimer;
     private long sec_elapsed;
@@ -71,6 +80,8 @@ public class TimerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_timer, container, false);
+
+        mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         timer_title = (TextView) rootView.findViewById(R.id.timer_title);
         number_picker = (NumberPicker) rootView.findViewById(R.id.pickerTime);
@@ -184,18 +195,72 @@ public class TimerFragment extends Fragment {
             long totalSecsUntilFinished = millisUntilFinished / 1000;
             long minUntilFinished = totalSecsUntilFinished / SEC_IN_MIN;
             long remainingSecs = totalSecsUntilFinished % SEC_IN_MIN;
-            String counterContents = minUntilFinished + " : " + remainingSecs;
+            String minString;
+            String secString;
+            if (minUntilFinished < 10) {
+                minString = "0" + minUntilFinished;
+            } else {
+                minString = String.valueOf(minUntilFinished);
+            }
+            if(remainingSecs < 10){
+                secString = "0" + remainingSecs;
+            } else {
+                secString = String.valueOf(remainingSecs);
+            }
+            String counterContents = minString + " : " + secString;
 
             counter_text.setText(counterContents);
 
             if (sec_elapsed % (interval_length * SEC_IN_MIN) == 0) {
-                vibrator.vibrate(500);
+                //vibrator.vibrate(500);
+                long minElapsed = number_picker.getValue() - minUntilFinished;
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(mContext)
+                                .setSmallIcon(R.drawable.ic_notify)
+                                .setContentTitle("This is your " + minElapsed + " minute reminder!")
+                                .setContentText(minUntilFinished + " minutes to go.")
+                                .setVibrate(new long[]{0, 500});
+
+                // Creates an explicit intent for an Activity in your app
+                Intent resultIntent = new Intent(mContext, MainActivity.class);
+
+                // The stack builder object will contain an artificial back stack for the
+                // started Activity.
+                // This ensures that navigating backward from the Activity leads out of
+                // your application to the Home screen.
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
+                // Adds the back stack for the Intent (but not the Intent itself)
+                stackBuilder.addParentStack(MainActivity.class);
+                // Adds the Intent that starts the Activity to the top of the stack
+                stackBuilder.addNextIntent(resultIntent);
+                /*PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );*/
+
+                PendingIntent resultPendingIntent = PendingIntent.getActivity(
+                        mContext.getApplicationContext(),
+                        0,
+                        new Intent(), // add this
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+                mBuilder.setContentIntent(resultPendingIntent);
+
+                Notification notification = mBuilder.build();
+                notification.defaults |= Notification.DEFAULT_VIBRATE;
+
+
+                // mId allows you to update the notification later on.
+                mNotificationManager.cancel(current_notification);
+                current_notification++;
+                mNotificationManager.notify(current_notification, notification);
             }
         }
 
         public void onFinish() {
-            long[] pattern = {0, 500, 100, 500};
-            vibrator.vibrate(pattern, -1);
+            long[] pattern = {0, 500, 100, 500, 100, 500};
+            // vibrator.vibrate(pattern, -1);
 
             recordTime();
 
@@ -203,12 +268,56 @@ public class TimerFragment extends Fragment {
             toast.show();
 
             number_picker.setVisibility(View.VISIBLE);
+            counter_text.setVisibility(View.GONE);
             btnBegin.setClickable(true);
             btnEnd.setClickable(false);
             btnBegin.setVisibility(View.VISIBLE);
             btnEnd.setVisibility(View.VISIBLE);
             btnCancel.setVisibility(View.VISIBLE);
             timer_title.setText(restingTitle);
+
+
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(mContext)
+                            .setSmallIcon(R.drawable.ic_notify)
+                            .setContentTitle("Session finished")
+                            .setContentText("Be sure to meditate again tomorrow!")
+                            .setVibrate(pattern);
+
+            // Creates an explicit intent for an Activity in your app
+            Intent resultIntent = new Intent(mContext, MainActivity.class);
+
+            // The stack builder object will contain an artificial back stack for the
+            // started Activity.
+            // This ensures that navigating backward from the Activity leads out of
+            // your application to the Home screen.
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
+            // Adds the back stack for the Intent (but not the Intent itself)
+            stackBuilder.addParentStack(MainActivity.class);
+            // Adds the Intent that starts the Activity to the top of the stack
+            stackBuilder.addNextIntent(resultIntent);
+                /*PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );*/
+
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(
+                    mContext.getApplicationContext(),
+                    0,
+                    new Intent(), // add this
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            mBuilder.setContentIntent(resultPendingIntent);
+
+            Notification notification = mBuilder.build();
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+
+
+            // mId allows you to update the notification later on.
+            mNotificationManager.cancel(current_notification);
+            current_notification++;
+            mNotificationManager.notify(current_notification, notification);
 
             // TODO: start the counting up and change the buttons displayed
         }
