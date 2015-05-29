@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +52,9 @@ public class SessionsListFragment extends Fragment {
 */
 
         ArrayList<Session> sessionsArray = db.getAllSessions();
-        Log.d("+++all sessions", sessionsArray.toString());
+        //Log.d("+++all sessions", sessionsArray.toString());
         //Log.d("+++session[0].date", sessionsArray.get(0).getDate());
-        Log.d("+++session[0].dur", sessionsArray.get(0).getDuration());
+        //Log.d("+++session[0].dur", sessionsArray.get(0).getDuration());
 
         SessionsCustomAdapter adapter = new SessionsCustomAdapter(mContext, sessionsArray);
         ListView listView = (ListView) rootView.findViewById(R.id.sessions_list);

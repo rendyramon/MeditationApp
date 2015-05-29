@@ -91,18 +91,22 @@ public class MainActivity extends ActionBarActivity
         if (position == 0) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, TimerFragment.newInstance(default_length, interval, this))
+                    .addToBackStack(null)
                     .commit();
         } else if (position == 1) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, SessionsListFragment.newInstance(this))
+                    .addToBackStack(null)
                     .commit();
         } else if (position == 2) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ManualFragment.newInstance(this))
+                    .addToBackStack(null)
                     .commit();
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, TimerFragment.newInstance(default_length, interval, this))
+                    .addToBackStack(null)
                     .commit();
             Toast toast = Toast.makeText(this, "A drawer error just occurred, sorry!", Toast.LENGTH_SHORT);
             toast.show();
