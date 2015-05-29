@@ -1,4 +1,4 @@
-package com.varunb.drawertest;
+package com.varunb.meditationminder;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -37,7 +37,7 @@ public class SessionsListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_sessions_list, container, false);
+        View rootView = inflater.inflate(com.varunb.meditationminder.R.layout.fragment_sessions_list, container, false);
         DatabaseHelper db = new DatabaseHelper(mContext);
 
         // THIS IS JUST TO CHECK IF IT WORKS
@@ -57,7 +57,7 @@ public class SessionsListFragment extends Fragment {
         //Log.d("+++session[0].dur", sessionsArray.get(0).getDuration());
 
         SessionsCustomAdapter adapter = new SessionsCustomAdapter(mContext, sessionsArray);
-        ListView listView = (ListView) rootView.findViewById(R.id.sessions_list);
+        ListView listView = (ListView) rootView.findViewById(com.varunb.meditationminder.R.id.sessions_list);
         listView.setAdapter(adapter);
 
         return rootView;

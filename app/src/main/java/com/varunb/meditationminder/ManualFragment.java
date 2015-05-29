@@ -1,4 +1,4 @@
-package com.varunb.drawertest;
+package com.varunb.meditationminder;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -34,12 +34,12 @@ public class ManualFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_manual_add, container, false);
+        View rootView = inflater.inflate(com.varunb.meditationminder.R.layout.fragment_manual_add, container, false);
 
         //final EditText editDate = (EditText) rootView.findViewById(R.id.edit_date);
-        final EditText editDur = (EditText) rootView.findViewById(R.id.edit_duration);
-        final Button btnSave = (Button) rootView.findViewById(R.id.btn_save);
-        final DatePicker datePicker = (DatePicker) rootView.findViewById(R.id.choose_date);
+        final EditText editDur = (EditText) rootView.findViewById(com.varunb.meditationminder.R.id.edit_duration);
+        final Button btnSave = (Button) rootView.findViewById(com.varunb.meditationminder.R.id.btn_save);
+        final DatePicker datePicker = (DatePicker) rootView.findViewById(com.varunb.meditationminder.R.id.choose_date);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

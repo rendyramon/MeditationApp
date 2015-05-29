@@ -1,4 +1,4 @@
-package com.varunb.drawertest;
+package com.varunb.meditationminder;
 
 /**
  * Created by rajeevbansal on 5/28/15.

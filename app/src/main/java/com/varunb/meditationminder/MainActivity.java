@@ -1,4 +1,4 @@
-package com.varunb.drawertest;
+package com.varunb.meditationminder;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -34,10 +34,10 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(com.varunb.meditationminder.R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+                getSupportFragmentManager().findFragmentById(com.varunb.meditationminder.R.id.navigation_drawer);
         mTitle = getTitle();
 
         /**
@@ -52,8 +52,8 @@ public class MainActivity extends ActionBarActivity
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                com.varunb.meditationminder.R.id.navigation_drawer,
+                (DrawerLayout) findViewById(com.varunb.meditationminder.R.id.drawer_layout));
 
 //        PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
         // TODO: fix the above
@@ -90,22 +90,22 @@ public class MainActivity extends ActionBarActivity
         // position = 0 is first item in menu
         if (position == 0) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, TimerFragment.newInstance(default_length, interval, this))
+                    .replace(com.varunb.meditationminder.R.id.container, TimerFragment.newInstance(default_length, interval, this))
                     .addToBackStack(null)
                     .commit();
         } else if (position == 1) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, SessionsListFragment.newInstance(this))
+                    .replace(com.varunb.meditationminder.R.id.container, SessionsListFragment.newInstance(this))
                     .addToBackStack(null)
                     .commit();
         } else if (position == 2) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, ManualFragment.newInstance(this))
+                    .replace(com.varunb.meditationminder.R.id.container, ManualFragment.newInstance(this))
                     .addToBackStack(null)
                     .commit();
         } else {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, TimerFragment.newInstance(default_length, interval, this))
+                    .replace(com.varunb.meditationminder.R.id.container, TimerFragment.newInstance(default_length, interval, this))
                     .addToBackStack(null)
                     .commit();
             Toast toast = Toast.makeText(this, "A drawer error just occurred, sorry!", Toast.LENGTH_SHORT);
@@ -116,13 +116,13 @@ public class MainActivity extends ActionBarActivity
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(com.varunb.meditationminder.R.string.title_section1);
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
+                mTitle = getString(com.varunb.meditationminder.R.string.title_section2);
                 break;
             case 3:
-                mTitle = getString(R.string.title_section3);
+                mTitle = getString(com.varunb.meditationminder.R.string.title_section3);
                 break;
         }
     }
@@ -141,7 +141,7 @@ public class MainActivity extends ActionBarActivity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
+            getMenuInflater().inflate(com.varunb.meditationminder.R.menu.main, menu);
             restoreActionBar();
             return true;
         }
@@ -156,9 +156,9 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == com.varunb.meditationminder.R.id.action_settings) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new SettingsFragment())
+                    .replace(com.varunb.meditationminder.R.id.container, new SettingsFragment())
                     .commit();
             // TODO: add this, and other things, to the backstack
             return true;
@@ -196,7 +196,7 @@ public class MainActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            View rootView = inflater.inflate(com.varunb.meditationminder.R.layout.fragment_main, container, false);
 
             return rootView;
         }

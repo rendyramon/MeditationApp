@@ -1,4 +1,4 @@
-package com.varunb.drawertest;
+package com.varunb.meditationminder;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -79,18 +79,18 @@ public class TimerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_timer, container, false);
+        View rootView = inflater.inflate(com.varunb.meditationminder.R.layout.fragment_timer, container, false);
 
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        timer_title = (TextView) rootView.findViewById(R.id.timer_title);
-        number_picker = (NumberPicker) rootView.findViewById(R.id.pickerTime);
-        counter_text = (TextView) rootView.findViewById(R.id.counter_text);
-        interval_text = (TextView) rootView.findViewById(R.id.interval_text);
+        timer_title = (TextView) rootView.findViewById(com.varunb.meditationminder.R.id.timer_title);
+        number_picker = (NumberPicker) rootView.findViewById(com.varunb.meditationminder.R.id.pickerTime);
+        counter_text = (TextView) rootView.findViewById(com.varunb.meditationminder.R.id.counter_text);
+        interval_text = (TextView) rootView.findViewById(com.varunb.meditationminder.R.id.interval_text);
 
-        btnBegin = (Button) rootView.findViewById(R.id.btnBegin);
-        btnEnd = (Button) rootView.findViewById(R.id.btnEnd);
-        btnCancel = (Button) rootView.findViewById(R.id.btnCancel);
+        btnBegin = (Button) rootView.findViewById(com.varunb.meditationminder.R.id.btnBegin);
+        btnEnd = (Button) rootView.findViewById(com.varunb.meditationminder.R.id.btnEnd);
+        btnCancel = (Button) rootView.findViewById(com.varunb.meditationminder.R.id.btnCancel);
 
         btnBegin.setClickable(true);
         btnEnd.setVisibility(View.GONE);
@@ -216,7 +216,7 @@ public class TimerFragment extends Fragment {
                 long minElapsed = number_picker.getValue() - minUntilFinished;
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(mContext)
-                                .setSmallIcon(R.drawable.ic_notify)
+                                .setSmallIcon(com.varunb.meditationminder.R.drawable.ic_notify)
                                 .setContentTitle("This is your " + minElapsed + " minute reminder!")
                                 .setContentText(minUntilFinished + " minutes to go.")
                                 .setVibrate(new long[]{0, 500});
@@ -279,7 +279,7 @@ public class TimerFragment extends Fragment {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(mContext)
-                            .setSmallIcon(R.drawable.ic_notify)
+                            .setSmallIcon(com.varunb.meditationminder.R.drawable.ic_notify)
                             .setContentTitle("Session finished")
                             .setContentText("Be sure to meditate again tomorrow!")
                             .setVibrate(pattern);

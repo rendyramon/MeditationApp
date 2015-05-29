@@ -1,4 +1,4 @@
-package com.varunb.drawertest.dummy;
+package com.varunb.meditationminder.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

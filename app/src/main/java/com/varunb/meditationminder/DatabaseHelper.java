@@ -1,4 +1,4 @@
-package com.varunb.drawertest;
+package com.varunb.meditationminder;
 
 import android.content.ContentValues;
 import android.content.Context;

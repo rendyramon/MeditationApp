@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.varunb.drawertest.TimerFragment">
+    tools:context="com.varunb.meditationminder.TimerFragment">
 
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        tools:context="com.varunb.drawertest.TimerFragment">
+        tools:context="com.varunb.meditationminder.TimerFragment">
 
 
         <Button

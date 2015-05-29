@@ -1,4 +1,4 @@
-package com.varunb.drawertest;
+package com.varunb.meditationminder;
 
 import android.app.FragmentManager;
 import android.content.Context;
@@ -26,7 +26,7 @@ public class SessionsCustomAdapter extends ArrayAdapter<Session> {
         Session session = getItem(position);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_session, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(com.varunb.meditationminder.R.layout.custom_session, parent, false);
             //inflate(R.layout.custom_session, parent, false);
         }
 
@@ -36,8 +36,8 @@ public class SessionsCustomAdapter extends ArrayAdapter<Session> {
         view = convertView;
     }*/
 
-        TextView txtDate = (TextView) convertView.findViewById(R.id.session_date);
-        TextView txtDuration = (TextView) convertView.findViewById(R.id.session_duration);
+        TextView txtDate = (TextView) convertView.findViewById(com.varunb.meditationminder.R.id.session_date);
+        TextView txtDuration = (TextView) convertView.findViewById(com.varunb.meditationminder.R.id.session_duration);
 
         txtDate.setText(session.getDate());
         txtDuration.setText(session.getDuration());

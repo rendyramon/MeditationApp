@@ -1,4 +1,4 @@
-package com.varunb.drawertest;
+package com.varunb.meditationminder;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -14,7 +14,7 @@ public class SessionsContract {
         String[] SESSION_COLUMNS = {SESSION_ID, SESSION_DATE, SESSION_DURATION};
     }
 
-    public static final String CONTENT_AUTHORITY = "com.varunb.drawertest.provider";
+    public static final String CONTENT_AUTHORITY = "com.varunb.meditationminder.provider";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     private static final String PATH_SESSIONS = "sessions";
