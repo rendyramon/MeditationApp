@@ -52,9 +52,6 @@ public class SessionsListFragment extends Fragment {
 */
 
         ArrayList<Session> sessionsArray = db.getAllSessions();
-        //Log.d("+++all sessions", sessionsArray.toString());
-        //Log.d("+++session[0].date", sessionsArray.get(0).getDate());
-        //Log.d("+++session[0].dur", sessionsArray.get(0).getDuration());
 
         SessionsCustomAdapter adapter = new SessionsCustomAdapter(mContext, sessionsArray);
         ListView listView = (ListView) rootView.findViewById(com.varunb.meditationminder.R.id.sessions_list);

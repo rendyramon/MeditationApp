@@ -98,14 +98,16 @@ public class NavigationDrawerFragment extends Fragment {
         });
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
+                R.layout.custom_drawer_layout,
                 android.R.id.text1,
+
                 new String[]{
                         getString(com.varunb.meditationminder.R.string.title_section1),
                         getString(com.varunb.meditationminder.R.string.title_section2),
                         getString(com.varunb.meditationminder.R.string.title_section3),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
         return mDrawerListView;
     }
 

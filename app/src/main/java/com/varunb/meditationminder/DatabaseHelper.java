@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -36,8 +35,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + SessionsContract.SessionsColumns.SESSION_DURATION + " TEXT NOT NULL)";
 
         db.execSQL(CREATE_TABLE);
-
-        Log.d("++++onCreate()", "yes, we created");
     }
 
     @Override
@@ -56,8 +53,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public void addSession(Session session) {
-        Log.d("+++addSession()", "we are in here");
-
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();

@@ -3,7 +3,7 @@
 <resources>
     <color name="appPrimaryBackgroundColor">#009688</color>
     <color name="appSecondaryBackgroundColor">#004D40</color>
-    <color name="appColorBackgroundAccent">#FF9933</color>
+    <color name="appColorBackgroundAccent">#FFB870</color>
     <color name="appBackgroundColor">#FAFAFA</color>
     <color name="appPrimaryTextColor">#4D4D4D</color>
     <color name="appBody">#4D4D4D</color>
