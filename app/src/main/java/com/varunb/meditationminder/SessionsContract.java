@@ -11,7 +11,9 @@ public class SessionsContract {
         String SESSION_ID = "_id";
         String SESSION_DATE = "session_date";
         String SESSION_DURATION = "session_duration";
-        String[] SESSION_COLUMNS = {SESSION_ID, SESSION_DATE, SESSION_DURATION};
+        String SESSION_MACHINE_DATE = "session_machine_date";
+        String SESSION_MINUTES = "session_minutes";
+        String[] SESSION_COLUMNS = {SESSION_ID, SESSION_DATE, SESSION_DURATION, SESSION_MACHINE_DATE, SESSION_MINUTES};
     }
 
     public static final String CONTENT_AUTHORITY = "com.varunb.meditationminder.provider";

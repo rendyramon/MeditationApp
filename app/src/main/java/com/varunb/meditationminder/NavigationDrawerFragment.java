@@ -102,6 +102,7 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.id.text1,
 
                 new String[]{
+                        getString(com.varunb.meditationminder.R.string.title_section0),
                         getString(com.varunb.meditationminder.R.string.title_section1),
                         getString(com.varunb.meditationminder.R.string.title_section2),
                         getString(com.varunb.meditationminder.R.string.title_section3),

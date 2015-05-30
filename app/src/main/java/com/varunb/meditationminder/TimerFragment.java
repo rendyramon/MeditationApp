@@ -178,9 +178,12 @@ public class TimerFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("E, LLL d, yyyy");
         String sessionDate = sdf.format(c.getTime());
 
-        String elapsed_time = (sec_elapsed / 60) + " minutes";
+        long longElapsed = sec_elapsed / 60;
+        Integer intElapsed = (int) (long) longElapsed;
 
-        Session session = new Session(sessionDate, elapsed_time);
+        String elapsed_time = intElapsed + " minutes";
+
+        Session session = new Session(sessionDate, elapsed_time, c.getTimeInMillis(), intElapsed);
         db.addSession(session);
     }
 

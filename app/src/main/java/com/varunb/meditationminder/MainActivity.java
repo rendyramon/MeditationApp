@@ -90,15 +90,20 @@ public class MainActivity extends ActionBarActivity
         // position = 0 is first item in menu
         if (position == 0) {
             fragmentManager.beginTransaction()
-                    .replace(com.varunb.meditationminder.R.id.container, TimerFragment.newInstance(default_length, interval, this))
+                    .replace(com.varunb.meditationminder.R.id.container, StatusFragment.newInstance(default_length, this))
                     .addToBackStack(null)
                     .commit();
         } else if (position == 1) {
             fragmentManager.beginTransaction()
-                    .replace(com.varunb.meditationminder.R.id.container, SessionsListFragment.newInstance(this))
+                    .replace(com.varunb.meditationminder.R.id.container, TimerFragment.newInstance(default_length, interval, this))
                     .addToBackStack(null)
                     .commit();
         } else if (position == 2) {
+            fragmentManager.beginTransaction()
+                    .replace(com.varunb.meditationminder.R.id.container, SessionsListFragment.newInstance(this))
+                    .addToBackStack(null)
+                    .commit();
+        } else if (position == 3) {
             fragmentManager.beginTransaction()
                     .replace(com.varunb.meditationminder.R.id.container, ManualFragment.newInstance(this))
                     .addToBackStack(null)
@@ -116,12 +121,15 @@ public class MainActivity extends ActionBarActivity
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(com.varunb.meditationminder.R.string.title_section1);
+                mTitle = getString(com.varunb.meditationminder.R.string.title_section0);
                 break;
             case 2:
-                mTitle = getString(com.varunb.meditationminder.R.string.title_section2);
+                mTitle = getString(com.varunb.meditationminder.R.string.title_section1);
                 break;
             case 3:
+                mTitle = getString(com.varunb.meditationminder.R.string.title_section2);
+                break;
+            case 4:
                 mTitle = getString(com.varunb.meditationminder.R.string.title_section3);
                 break;
         }

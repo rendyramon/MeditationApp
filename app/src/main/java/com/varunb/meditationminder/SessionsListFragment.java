@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by rajeevbansal on 5/28/15.
@@ -52,6 +53,7 @@ public class SessionsListFragment extends Fragment {
 */
 
         ArrayList<Session> sessionsArray = db.getAllSessions();
+        Collections.sort(sessionsArray);
 
         SessionsCustomAdapter adapter = new SessionsCustomAdapter(mContext, sessionsArray);
         ListView listView = (ListView) rootView.findViewById(com.varunb.meditationminder.R.id.sessions_list);

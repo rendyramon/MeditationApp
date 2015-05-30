@@ -51,7 +51,7 @@ public class ManualFragment extends Fragment {
 
                 String elapsed_time = editDur.getText().toString() + " minutes";
 
-                Session session = new Session(sessionDate, elapsed_time);
+                Session session = new Session(sessionDate, elapsed_time, calendarView.getDate(), Integer.parseInt(editDur.getText().toString()));
                 db.addSession(session);
 
                 Toast toast = Toast.makeText(mContext, "Saved successfully!", Toast.LENGTH_LONG);

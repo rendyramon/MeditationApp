@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by rajeevbansal on 5/28/15.
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "sessions.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     interface Tables {
         String SESSIONS = "sessions";
@@ -32,7 +34,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + Tables.SESSIONS + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + SessionsContract.SessionsColumns.SESSION_DATE + " TEXT NOT NULL,"
-                + SessionsContract.SessionsColumns.SESSION_DURATION + " TEXT NOT NULL)";
+                + SessionsContract.SessionsColumns.SESSION_DURATION + " TEXT NOT NULL,"
+                + SessionsContract.SessionsColumns.SESSION_MACHINE_DATE + " TEXT NOT NULL,"
+                + SessionsContract.SessionsColumns.SESSION_MINUTES + " TEXT NOT NULL)";
 
         db.execSQL(CREATE_TABLE);
     }
@@ -58,6 +62,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(SessionsContract.SessionsColumns.SESSION_DATE, session.getDate());
         values.put(SessionsContract.SessionsColumns.SESSION_DURATION, session.getDuration());
+        values.put(SessionsContract.SessionsColumns.SESSION_MACHINE_DATE, session.getMachineDate());
+        values.put(SessionsContract.SessionsColumns.SESSION_MINUTES, session.getMinutes());
 
         db.insert(Tables.SESSIONS, null, values);
 
@@ -77,6 +83,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         session.setId(Integer.parseInt(cursor.getString(0)));
         session.setDate(cursor.getString(1));
         session.setDuration(cursor.getString(2));
+        session.setMachineDate(cursor.getLong(3));
+        session.setMinutes(cursor.getInt(4));
 
         cursor.close();
         return session;
@@ -97,6 +105,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 session.setId(Integer.parseInt(cursor.getString(0)));
                 session.setDate(cursor.getString(1));
                 session.setDuration(cursor.getString(2));
+                session.setMachineDate(cursor.getLong(3));
+                session.setMinutes(cursor.getInt(4));
 
                 sessions.add(session);
             } while (cursor.moveToNext());
@@ -107,12 +117,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sessions;
     }
 
+    public int getTodayTimes() {
+        ArrayList<Session> todaySessions = getAllSessions();
+
+        int total = 0;
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("E, LLL d, yyyy");
+        String today = sdf.format(c.getTime());
+
+        if (todaySessions.size() > 0) {
+            for (Session session : todaySessions) {
+                if (session.getDate().equals(today)) {
+                    total += Integer.valueOf(session.getMinutes());
+                }
+            }
+        }
+
+        return total;
+    }
+
     public int updateSession(Session session) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(SessionsContract.SessionsColumns.SESSION_DATE, session.getDate());
         values.put(SessionsContract.SessionsColumns.SESSION_DURATION, session.getDuration());
+        values.put(SessionsContract.SessionsColumns.SESSION_MACHINE_DATE, session.getMachineDate());
+        values.put(SessionsContract.SessionsColumns.SESSION_MINUTES, session.getMinutes());
 
         int i = db.update(Tables.SESSIONS, values, SessionsContract.SessionsColumns.SESSION_ID + " = ?", new String[]{String.valueOf(session.getId())});
 

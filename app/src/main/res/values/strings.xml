@@ -4,6 +4,7 @@
     <string name="title_section1">Session timer</string>
     <string name="title_section2">Session logs</string>
     <string name="title_section3">Add a missed session</string>
+    <string name="title_section0">Today\'s progress</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
