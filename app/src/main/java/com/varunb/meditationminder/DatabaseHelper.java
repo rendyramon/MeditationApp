@@ -21,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     interface Tables {
         String SESSIONS = "sessions";
+        //String LESSONS = "lessons";
     }
 
 

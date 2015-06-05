@@ -5,6 +5,7 @@
     <string name="title_section2">Session logs</string>
     <string name="title_section3">Add a missed session</string>
     <string name="title_section0">Today\'s progress</string>
+    <string name="title_section4">10-day meditation primer</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -16,4 +17,14 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="timer_fragment_title">Start a session timer</string>
+    <string name="day1_title">Day 1: Noticing the Self</string>
+    <string name="day2_title">Day 2: Noticing our Environment</string>
+    <string name="day3_title">Day 3: Noticing our Breath</string>
+    <string name="day4_title">Day 4: Reminders and First Five-Minute Sitting</string>
+    <string name="day5_title">Day 5: Reminders and Second Five-Minute Sitting</string>
+    <string name="day6_title">Day 6: Dealing with Discomfort while Meditating; Seven-Minute Sitting</string>
+    <string name="day7_title">Day 7: Reminders and Eight-Minute Sitting</string>
+    <string name="day8_title">Day 8: Reminders and Ten-Minute Sitting</string>
+    <string name="day9_title">Day 9: Reminders and Twelve-Minute Sitting</string>
+    <string name="day10_title">Day 10: Reminders and Fifteen-Minute Sitting</string>
 </resources>

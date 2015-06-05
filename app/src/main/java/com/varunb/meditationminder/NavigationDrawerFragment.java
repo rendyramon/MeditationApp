@@ -106,6 +106,7 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(com.varunb.meditationminder.R.string.title_section1),
                         getString(com.varunb.meditationminder.R.string.title_section2),
                         getString(com.varunb.meditationminder.R.string.title_section3),
+                        getString(com.varunb.meditationminder.R.string.title_section4)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 

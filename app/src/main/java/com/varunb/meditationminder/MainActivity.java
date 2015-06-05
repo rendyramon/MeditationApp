@@ -30,6 +30,10 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
     private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+
+    private static final String IS_LESSON_ON = "isLessonOn";
+    private static final String LAST_LESSON_FINISHED = "lastLessonFinished";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,14 @@ public class MainActivity extends ActionBarActivity
 
 //        PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
         // TODO: fix the above
+
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = pref.edit();
+        editor.putBoolean(IS_LESSON_ON, false);
+        editor.putInt(LAST_LESSON_FINISHED, 0);
+        editor.apply();
+
+
     }
 
     @Override
@@ -106,6 +118,11 @@ public class MainActivity extends ActionBarActivity
         } else if (position == 3) {
             fragmentManager.beginTransaction()
                     .replace(com.varunb.meditationminder.R.id.container, ManualFragment.newInstance(this))
+                    .addToBackStack(null)
+                    .commit();
+        } else if (position == 4) {
+            fragmentManager.beginTransaction()
+                    .replace(com.varunb.meditationminder.R.id.container, LessonFragment.newInstance(this))
                     .addToBackStack(null)
                     .commit();
         } else {
