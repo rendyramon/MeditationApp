@@ -17,11 +17,10 @@ import java.util.Calendar;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "sessions.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     interface Tables {
         String SESSIONS = "sessions";
-        //String LESSONS = "lessons";
     }
 
 
@@ -31,15 +30,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE "
+        String CREATE_TABLE_1 = "CREATE TABLE "
                 + Tables.SESSIONS + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + SessionsContract.SessionsColumns.SESSION_DATE + " TEXT NOT NULL,"
                 + SessionsContract.SessionsColumns.SESSION_DURATION + " TEXT NOT NULL,"
                 + SessionsContract.SessionsColumns.SESSION_MACHINE_DATE + " TEXT NOT NULL,"
                 + SessionsContract.SessionsColumns.SESSION_MINUTES + " TEXT NOT NULL)";
-
-        db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_TABLE_1);
     }
 
     @Override
@@ -74,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Session getSession(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(Tables.SESSIONS, SessionsContract.SessionsColumns.SESSION_COLUMNS, " id = ?", new String[]{String.valueOf(id)}, null, null, null, null);
+        Cursor cursor = db.query(Tables.SESSIONS, SessionsContract.SessionsColumns.SESSION_COLUMNS, " _id = ?", new String[]{String.valueOf(id)}, null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -163,6 +161,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
     }
-
 
 }

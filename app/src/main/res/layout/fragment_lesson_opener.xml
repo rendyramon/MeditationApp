@@ -44,64 +44,74 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Lessons"
                 android:layout_marginTop="5dp"
-                android:textStyle="bold"/>
+                android:text='We recommend you follow the lessons in sequence, but feel free to repeat a lesson until you feel comfortable. There is no "right" pace.'
+                android:textSize="15sp" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_lesson1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/day1_title" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_lesson2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/day2_title" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_lesson3"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/day3_title" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_lesson4"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/day4_title" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_lesson5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/day5_title" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_lesson6"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/day6_title" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_lesson7"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/day7_title" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_lesson8"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/day8_title" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_lesson9"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/day9_title" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_lesson10"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -111,7 +121,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:textStyle="italic"
                 android:text="Adapted from the work of Christopher K. Germer, Ph.D." />
 
@@ -119,12 +129,5 @@
         </LinearLayout>
 
     </ScrollView>
-
-    <Button
-        android:id="@+id/btn_begin_course"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Begin Course"
-        android:textSize="15sp" />
 
 </LinearLayout>

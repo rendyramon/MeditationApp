@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -25,13 +26,15 @@ public class LessonContentFragment extends Fragment {
     private static final String LAST_LESSON_FINISHED = "lastLessonFinished";
     private View rootView;
     private FragmentManager fragmentManager;
+    private static int mLessonNumber;
 
 
-    public static LessonContentFragment newInstance(Context context) {
+    public static LessonContentFragment newInstance(Context context, int lessonNumber) {
         mContext = context;
         LessonContentFragment fragment = new LessonContentFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        mLessonNumber = lessonNumber;
         return fragment;
     }
 
@@ -69,6 +72,9 @@ public class LessonContentFragment extends Fragment {
                 mContext.getResources().getString(R.string.day10_title)
         };
 
+        final int[] timer_lengths = {5, 5, 5, 5, 5, 7, 8, 10, 12, 15};
+        final int[] timer_interval = {1, 1, 1, 1, 1, 1, 2, 2, 3, 5};
+
         // TODO: finish updating the lesson contents
 
 
@@ -76,9 +82,19 @@ public class LessonContentFragment extends Fragment {
         rootView = inflater.inflate(com.varunb.meditationminder.R.layout.fragment_lesson_content, container, false);
         TextView text_lesson_title = (TextView) rootView.findViewById(R.id.text_lesson_title);
         TextView text_lesson_content = (TextView) rootView.findViewById(R.id.text_lesson_content);
+        Button btn_go_to_time = (Button) rootView.findViewById(R.id.btn_go_to_time);
 
-        text_lesson_title.setText(lesson_titles[0]);
-        text_lesson_content.setText(lesson_contents[0]);
+        text_lesson_title.setText(lesson_titles[mLessonNumber-1]);
+        text_lesson_content.setText(lesson_contents[mLessonNumber-1]);
+
+        btn_go_to_time.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                fragmentManager.beginTransaction()
+                        .replace(com.varunb.meditationminder.R.id.container, TimerFragment.newInstance(timer_lengths[mLessonNumber-1], timer_interval[mLessonNumber-1], mContext, true))
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
 
         return rootView;

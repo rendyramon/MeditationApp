@@ -62,12 +62,20 @@ public class MainActivity extends ActionBarActivity
 //        PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
         // TODO: fix the above
 
+        /**
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         editor = pref.edit();
         editor.putBoolean(IS_LESSON_ON, false);
         editor.putInt(LAST_LESSON_FINISHED, 0);
         editor.apply();
 
+
+        LessonData lessonData = new LessonData(false, 0, false);
+        DatabaseHelper db = new DatabaseHelper(this);
+        if(db.isThereLessonData()) {
+            db.addLessonsData(lessonData);
+        }
+         */
 
     }
 
@@ -107,7 +115,7 @@ public class MainActivity extends ActionBarActivity
                     .commit();
         } else if (position == 1) {
             fragmentManager.beginTransaction()
-                    .replace(com.varunb.meditationminder.R.id.container, TimerFragment.newInstance(default_length, interval, this))
+                    .replace(com.varunb.meditationminder.R.id.container, TimerFragment.newInstance(default_length, interval, this, false))
                     .addToBackStack(null)
                     .commit();
         } else if (position == 2) {
@@ -127,7 +135,7 @@ public class MainActivity extends ActionBarActivity
                     .commit();
         } else {
             fragmentManager.beginTransaction()
-                    .replace(com.varunb.meditationminder.R.id.container, TimerFragment.newInstance(default_length, interval, this))
+                    .replace(com.varunb.meditationminder.R.id.container, TimerFragment.newInstance(default_length, interval, this, false))
                     .addToBackStack(null)
                     .commit();
             Toast toast = Toast.makeText(this, "A drawer error just occurred, sorry!", Toast.LENGTH_SHORT);

@@ -36,9 +36,12 @@ public class TimerFragment extends Fragment {
     private static Context mContext;
     private static int default_length;
     private static int interval_length;
+    private static boolean from_lesson;
     private static boolean exceededTarget;
     private final String restingTitle = "Start a session timer";
+    private final String restingTitleFromLesson = "Let's try it out!";
     private final String activeTitle = "Session in progress";
+    private final String lessonIntervalText = "Interval length set by today's lesson.";
     private int current_notification = 0;
 
     private NotificationManager mNotificationManager;
@@ -53,6 +56,7 @@ public class TimerFragment extends Fragment {
     private TextView interval_text;
     private TextView counter_text;
     private TextView timer_title;
+    private TextView setting_reminder_text;
 
 
     // TODO: use the above boolean to record when we flip from countdown to count up
@@ -61,10 +65,11 @@ public class TimerFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static TimerFragment newInstance(int length, int intervals, Context context) {
+    public static TimerFragment newInstance(int length, int intervals, Context context, boolean fromLesson) {
         mContext = context;
         default_length = length;
         interval_length = intervals;
+        from_lesson = fromLesson;
         TimerFragment fragment = new TimerFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, 0);
@@ -87,6 +92,7 @@ public class TimerFragment extends Fragment {
         number_picker = (NumberPicker) rootView.findViewById(com.varunb.meditationminder.R.id.pickerTime);
         counter_text = (TextView) rootView.findViewById(com.varunb.meditationminder.R.id.counter_text);
         interval_text = (TextView) rootView.findViewById(com.varunb.meditationminder.R.id.interval_text);
+        setting_reminder_text = (TextView) rootView.findViewById(R.id.setting_reminder_text);
 
         btnBegin = (Button) rootView.findViewById(com.varunb.meditationminder.R.id.btnBegin);
         btnEnd = (Button) rootView.findViewById(com.varunb.meditationminder.R.id.btnEnd);
@@ -100,8 +106,15 @@ public class TimerFragment extends Fragment {
         number_picker.setMaxValue(60);
         number_picker.setValue(default_length);
 
-        timer_title.setText(restingTitle);
+        if (from_lesson) {
+            setting_reminder_text.setText(lessonIntervalText);
+            timer_title.setText(restingTitleFromLesson);
+        } else {
+            timer_title.setText(restingTitle);
+        }
+
         interval_text.setText("Your phone will buzz every " + interval_length + " minutes.");
+
 
         btnBegin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,7 +218,7 @@ public class TimerFragment extends Fragment {
             } else {
                 minString = String.valueOf(minUntilFinished);
             }
-            if(remainingSecs < 10){
+            if (remainingSecs < 10) {
                 secString = "0" + remainingSecs;
             } else {
                 secString = String.valueOf(remainingSecs);
